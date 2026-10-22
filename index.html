@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>鳥類小遊戲</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500&display=swap">
+<style>
+:root {
+  --night: #0c1224;
+  --line: #2a3352;
+  --lamp: #ffd27a;
+  --ink: #ece6d6;
+  --muted: #98a1b8;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--night);
+  color: var(--ink);
+  font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+  padding: 48px max(16px, env(safe-area-inset-right, 0px)) 48px max(16px, env(safe-area-inset-left, 0px));
+}
+main { max-width: 560px; margin: 0 auto; display: grid; gap: 28px; }
+h1 { margin: 0; font-family: "LXGW WenKai TC", "Kaiti TC", serif; font-size: 2rem; letter-spacing: 0.04em; }
+p { margin: 0; color: var(--muted); line-height: 1.7; }
+ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+a.game {
+  display: grid;
+  gap: 4px;
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  color: var(--ink);
+  text-decoration: none;
+}
+a.game:hover, a.game:focus-visible { border-color: var(--lamp); outline: none; }
+a.game strong { font-family: "LXGW WenKai TC", "Kaiti TC", serif; font-size: 1.3rem; color: var(--lamp); }
+a.game span { color: var(--muted); font-size: 0.92rem; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>鳥類小遊戲</h1>
+    <p>把鳥真正的習性做成遊戲。</p>
+  </header>
+  <ul>
+    <li>
+      <a class="game" href="nightjar/">
+        <strong>夜鷹吃蟲</strong>
+        <span>台灣夜鷹在路燈下張大嘴吃飛蟲。按住張嘴，放開往上飛，天亮前吃越多越好。</span>
+      </a>
+    </li>
+  </ul>
+</main>
+</body>
+</html>
