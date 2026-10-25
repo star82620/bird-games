@@ -18,6 +18,7 @@
   --moth: #f3e7c4;
   --ink: #ece6d6;
   --muted: #98a1b8;
+  --soft: #c9cdd8;
   --danger: #ff9a7a;
   --font-display: "LXGW WenKai TC", "Kaiti TC", "STKaiti", "BiauKai", serif;
   --font-body: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
@@ -170,6 +171,20 @@ footer {
   color: var(--muted);
 }
 footer b { color: var(--ink); font-weight: 500; }
+.fact {
+  display: grid;
+  gap: 6px;
+  margin-top: 4px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+.fact-label {
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--lamp);
+}
+.card .fact p { font-size: 0.75rem; line-height: 1.7; color: var(--soft); }
 .hint-touch { display: none; }
 @media (hover: none) and (pointer: coarse) {
   .hint-key { display: none; }
@@ -213,6 +228,10 @@ footer b { color: var(--ink); font-weight: 500; }
       <p class="big">這一晚吃了<b id="overScore">0</b>隻蟲</p>
       <p class="note" id="overNote"></p>
       <button type="button" id="btnAgain">再飛一晚</button>
+      <div class="fact">
+        <span class="fact-label">你知道嗎？</span>
+        <p>台灣夜鷹住在城市裡，常在平坦的屋頂上生蛋育雛。夏夜聽到的「追、追、追」，就是牠們的叫聲。</p>
+      </div>
     </div>
   </div>
 </div>
