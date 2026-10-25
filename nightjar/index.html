@@ -179,12 +179,12 @@ footer b { color: var(--ink); font-weight: 500; }
   border-top: 1px solid var(--line);
 }
 .fact-label {
-  font-size: 0.82rem;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.08em;
   color: var(--lamp);
 }
-.card .fact p { font-size: 0.75rem; line-height: 1.7; color: var(--soft); }
+.card .fact p { font-size: 14px; line-height: 1.7; color: var(--soft); }
 .hint-touch { display: none; }
 @media (hover: none) and (pointer: coarse) {
   .hint-key { display: none; }
@@ -211,8 +211,8 @@ footer b { color: var(--ink); font-weight: 500; }
 
   <div class="panel" id="panelStart">
     <div class="card">
-      <h2>今晚去路燈下吃蟲</h2>
-      <p>台灣夜鷹會在城市的路燈旁邊飛來飛去，張開大嘴把飛蟲整口吃掉。</p>
+      <h2>今晚出門吃蟲</h2>
+      <p>台灣夜鷹會在夜晚的空中飛來飛去，張開大嘴，邊飛邊把飛蟲撈進嘴裡。</p>
       <ul class="rules">
         <li><span class="k">按住</span><span>張嘴吃蟲。嘴巴張開風阻大，會往下掉、飛得慢</span></li>
         <li><span class="k">放開</span><span>閉嘴往上飛</span></li>
@@ -230,7 +230,7 @@ footer b { color: var(--ink); font-weight: 500; }
       <button type="button" id="btnAgain">再飛一晚</button>
       <div class="fact">
         <span class="fact-label">你知道嗎？</span>
-        <p>台灣夜鷹住在城市裡，常在平坦的屋頂上生蛋育雛。夏夜聽到的「追、追、追」，就是牠們的叫聲。</p>
+        <p id="factText"></p>
       </div>
     </div>
   </div>
@@ -318,7 +318,8 @@ footer b { color: var(--ink); font-weight: 500; }
     }
     // a few stray insects up high between lamps
     if (Math.random() < 0.55) {
-      const fx = x + rand(160, 260), fy = rand(70, Math.max(80, headY - 30));
+      // keep stray insects around cruise height so they stay reachable
+      const fx = x + rand(160, 260), fy = rand(H * 0.18, Math.max(H * 0.18 + 10, headY - 30));
       const m = Math.floor(rand(2, 5));
       for (let i = 0; i < m; i++) {
         bugs.push({ cx: fx + rand(-20, 20), cy: fy + rand(-14, 14), rx: rand(6, 16), ry: rand(5, 12), w: rand(1.5, 3), ph: rand(0, 6.28), drift: 18, x: fx, y: fy, alive: true });
@@ -331,6 +332,23 @@ footer b { color: var(--ink); font-weight: 500; }
     state = 'play';
     panelStart.hidden = true;
     panelOver.hidden = true;
+  }
+
+  // one random fact per game over; sources in art/nightjar-research.md
+  const FACTS = [
+    '夜鷹也被叫做「蚊母鳥」，但研究人員檢查了 43 隻夜鷹的胃，一隻蚊子都沒找到。牠們吃最多的是蛾，其次是金龜子、天牛和白蟻。',
+    '夜鷹不築巢，直接在地上下蛋。牠們原本大多在河床的空地繁殖，現在城市頂樓也找得到牠們的蹤跡。說不定你家頂樓就有唷！',
+    '夜鷹每次只下 2 顆蛋。蛋剛產下時是粉紅色帶褐斑，之後會慢慢變白。夜鷹寶寶一孵出來就會自己走動，曾經有出生第一天的雛鳥，一天就走了 13 公尺。',
+    '夜鷹不只會「追、追」叫。在天敵靠近時會「呱、呱、呱」，傍晚出門前會低沉地「叩叩叩叩」，雛鳥則會「勾、勾」呼叫爸媽。',
+    '春夏夜晚常聽到「追—追—」的響亮叫聲，就是夜鷹雄鳥在宣示地盤和求偶。夜深人靜時，600 公尺外的錄音筆還錄得到哦！',
+    '白天的夜鷹會停在地面、河床或屋頂上休息。一身灰褐色、布滿細紋的羽毛就是牠們的保護色，讓天敵很難發現。夜鷹寶寶也常因為蹲在地上一動也不動，被民眾誤以為受傷送去急救站，其實人家只是在休息啦！'
+  ];
+  let lastFact = -1;
+  function nextFact() {
+    let i = Math.floor(Math.random() * FACTS.length);
+    if (i === lastFact) i = (i + 1) % FACTS.length;
+    lastFact = i;
+    return FACTS[i];
   }
 
   function end(reason) {
@@ -351,6 +369,7 @@ footer b { color: var(--ink); font-weight: 500; }
     }
     if (reason !== 'dawn') note += ` 還剩 ${Math.ceil(timeLeft)} 秒才天亮。`;
     $('overNote').textContent = note;
+    $('factText').textContent = nextFact();
     panelOver.hidden = false;
   }
 
@@ -398,7 +417,9 @@ footer b { color: var(--ink); font-weight: 500; }
     bird.flap += dt * (open ? 4 : 9);
 
     if (playing) {
-      const acc = open ? 520 : -460;
+      // closed mouth: spring toward a slowly wandering cruise height instead of the ceiling
+      const cruiseY = H * 0.26 + Math.sin(T * 0.55) * 34 + Math.sin(T * 1.37 + 1.3) * 14;
+      const acc = open ? 520 : clamp((cruiseY - bird.y) * 7 - bird.vy * 3.2, -460, 360);
       bird.vy = clamp(bird.vy + acc * dt, -230, 300);
       bird.y += bird.vy * dt;
       if (bird.y < 40) { bird.y = 40; if (bird.vy < 0) bird.vy = 0; }
