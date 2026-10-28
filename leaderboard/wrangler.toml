@@ -3,7 +3,7 @@ main = "src/index.js"
 compatibility_date = "2025-09-01"
 
 [vars]
-ALLOWED_ORIGINS = "https://bird-games.star82620.workers.dev,https://star82620.github.io"
+ALLOWED_ORIGINS = "https://bird-games.star82620.workers.dev"
 
 [[d1_databases]]
 binding = "DB"
