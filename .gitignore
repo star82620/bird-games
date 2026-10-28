@@ -1,2 +1,12 @@
 # AI-generated art drafts stay local
 nightjar/art/*.png
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
+
+# Art drafts and research notes stay local
+nightjar/art/

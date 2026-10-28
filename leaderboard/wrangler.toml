@@ -1,0 +1,11 @@
+name = "nightjar-leaderboard"
+main = "src/index.js"
+compatibility_date = "2025-09-01"
+
+[vars]
+ALLOWED_ORIGINS = "https://bird-games.star82620.workers.dev,https://star82620.github.io"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "nightjar-leaderboard"
+database_id = "170257c6-ebd9-4d99-b370-3010be758e67"

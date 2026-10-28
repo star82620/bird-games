@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>夜鷹吃蟲</title>
+<title>夜鷹開飯啦！</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+Marker+Gothic&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
 <style>
 /* Layout: one-screen night street. The game canvas fills the frame, HUD floats over the sky, controls strip sits below. */
 :root {
@@ -20,7 +20,7 @@
   --muted: #98a1b8;
   --soft: #c9cdd8;
   --danger: #ff9a7a;
-  --font-display: "LXGW WenKai TC", "Kaiti TC", "STKaiti", "BiauKai", serif;
+  --font-display: "LXGW Marker Gothic", "Noto Sans TC", "PingFang TC", sans-serif;
   --font-body: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
   color-scheme: dark;
 }
@@ -50,7 +50,7 @@ header {
 h1 {
   margin: 0;
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 400;
   font-size: 1.6rem;
   letter-spacing: 0.04em;
   color: var(--ink);
@@ -62,6 +62,7 @@ h1 small {
   margin-left: 10px;
   letter-spacing: 0.02em;
 }
+@media (max-width: 499px) { h1 small { display: block; margin: 4px 0 0; } }
 .best { color: var(--muted); font-size: 0.85rem; font-variant-numeric: tabular-nums; }
 .best b { color: var(--lamp); font-weight: 700; }
 
@@ -94,7 +95,7 @@ h1 small {
 .count {
   font-family: var(--font-display);
   font-size: 1.9rem;
-  font-weight: 700;
+  font-weight: 400;
   color: var(--lamp);
   line-height: 1;
   min-width: 3.2em;
@@ -116,28 +117,82 @@ h1 small {
 .card {
   max-width: 420px;
   display: grid;
-  gap: 12px;
+  gap: 10px;
   text-align: left;
   background: rgba(12, 18, 36, 0.86);
   border: 1px solid var(--line);
   border-radius: 14px;
   padding: 22px 22px 20px;
   cursor: default;
+  max-height: 100%;
+  overflow-y: auto;
 }
 .card h2 {
   margin: 0;
   font-family: var(--font-display);
   font-size: 1.7rem;
-  font-weight: 700;
+  font-weight: 400;
   text-wrap: balance;
 }
+#panelOver h2 { font-size: 1.45rem; }
+#panelOver .submit {
+  margin-top: 6px;
+  gap: 10px;
+  background: rgba(255, 210, 122, 0.07);
+  border: 1px solid rgba(255, 210, 122, 0.32);
+  border-radius: 12px;
+  padding: 14px;
+}
+#panelOver .actions { margin-top: 8px; gap: 18px; }
+#btnAgain { padding: 12px 28px; min-height: 48px; }
+#btnSubmit { color: var(--lamp); background: transparent; border: 1px solid var(--lamp); padding: 0 18px; min-height: 44px; }
 .card p { margin: 0; line-height: 1.75; color: var(--ink); font-size: 0.95rem; }
 .card .note { color: var(--muted); font-size: 0.82rem; }
-.card .big { font-family: var(--font-display); font-size: 1.25rem; }
-.card .big b { color: var(--lamp); font-size: 1.8rem; margin: 0 4px; }
-.rules { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; font-size: 0.92rem; line-height: 1.6; }
-.rules li { display: grid; grid-template-columns: 4.6em 1fr; gap: 8px; }
-.rules .k { color: var(--lamp); font-weight: 500; }
+.card .big { font-family: var(--font-display); font-size: 1.25rem; font-weight: 400; }
+.card .big b { color: var(--lamp); font-size: 1.9rem; font-weight: 400; margin: 0 4px; }
+#panelStart .card { text-align: center; justify-items: center; }
+.steps { margin: 4px 0 0; padding: 0; list-style: none; width: 100%; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.steps li {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  padding: 14px 8px 12px;
+  background: rgba(236, 230, 214, 0.05);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  font-size: 0.92rem;
+}
+.steps svg { width: 30px; height: 30px; margin-bottom: 6px; fill: none; stroke: var(--lamp); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.steps i {
+  display: inline-grid;
+  place-items: center;
+  width: 1.4em; height: 1.4em;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--night);
+  font-style: normal;
+  font-size: 0.8em;
+  font-weight: 700;
+  vertical-align: 0.1em;
+}
+.steps b { color: var(--lamp); font-weight: 700; margin-right: 4px; }
+.card .tips { font-size: 13px; line-height: 1.6; color: var(--muted); }
+button.cta {
+  justify-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 4px;
+  font-size: 1.25rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  padding: 13px 22px;
+  box-shadow: 0 4px 0 #b88a3a;
+}
+button.cta svg { width: 18px; height: 18px; fill: currentColor; }
+button.cta:active { transform: translateY(2px); box-shadow: 0 2px 0 #b88a3a; }
 button {
   justify-self: start;
   font: inherit;
@@ -153,6 +208,52 @@ button {
 }
 button:hover { filter: brightness(1.06); }
 button:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+button:disabled { opacity: 0.55; cursor: default; }
+button.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+/* looks like a text link, but keeps a 44px-tall tap area */
+button.link { background: none; border: 0; color: var(--soft); font-weight: 400; font-size: 14px; text-decoration: underline; text-underline-offset: 3px; padding: 0 4px; min-height: 44px; }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+
+.submit { display: grid; gap: 8px; }
+.submit label { font-size: 14px; font-weight: 500; color: var(--lamp); }
+.submit-row { display: flex; gap: 8px; }
+.submit input {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  font-size: 16px;
+  color: var(--ink);
+  background: rgba(236, 230, 214, 0.06);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 9px 16px;
+}
+.submit input::placeholder { color: var(--muted); }
+.submit input:focus-visible { outline: 2px solid var(--lamp); outline-offset: 2px; }
+.card .hint { font-size: 13px; line-height: 1.6; color: var(--muted); }
+
+.board-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  min-width: min(300px, 70vw);
+  font-variant-numeric: tabular-nums;
+}
+.board-list li {
+  display: grid;
+  grid-template-columns: 2.2em 1fr auto;
+  gap: 10px;
+  padding: 7px 2px;
+  border-bottom: 1px solid var(--line);
+  font-size: 15px;
+}
+.board-list .rank { color: var(--muted); }
+.board-list li:nth-child(-n+3) .rank { color: var(--lamp); font-weight: 700; }
+.board-list .who { min-width: 0; overflow-wrap: anywhere; }
+.board-list .pts { color: var(--soft); }
+.board-list li.me { color: var(--lamp); }
+.board-list li.me .pts { color: var(--lamp); }
 kbd {
   font-family: var(--font-body);
   font-size: 0.78em;
@@ -179,10 +280,13 @@ footer b { color: var(--ink); font-weight: 500; }
   border-top: 1px solid var(--line);
 }
 .fact-label {
-  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
   font-weight: 500;
   letter-spacing: 0.08em;
-  color: var(--lamp);
+  color: var(--soft);
 }
 .card .fact p { font-size: 14px; line-height: 1.7; color: var(--soft); }
 .hint-touch { display: none; }
@@ -195,7 +299,7 @@ footer b { color: var(--ink); font-weight: 500; }
 <body>
 
 <header>
-  <h1>夜鷹吃蟲<small>一晚 60 秒，天亮前吃越多越好</small></h1>
+  <h1>夜鷹開飯啦！<small>一晚 60 秒，在天亮前填飽肚子</small></h1>
   <div class="best">最佳紀錄 <b id="best">0</b> 隻</div>
 </header>
 
@@ -213,12 +317,18 @@ footer b { color: var(--ink); font-weight: 500; }
     <div class="card">
       <h2>今晚出門吃蟲</h2>
       <p>台灣夜鷹會在夜晚的空中飛來飛去，張開大嘴，邊飛邊把飛蟲撈進嘴裡。</p>
-      <ul class="rules">
-        <li><span class="k">按住</span><span>張嘴吃蟲。嘴巴張開風阻大，會往下掉、飛得慢</span></li>
-        <li><span class="k">放開</span><span>閉嘴往上飛</span></li>
-        <li><span class="k">小心</span><span>不要撞到地面和路燈</span></li>
-      </ul>
-      <button type="button" id="btnStart">開始</button>
+      <ol class="steps">
+        <li>
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3v10"/><path d="m7 9 5 5 5-5"/><path d="M5 20h14"/></svg>
+          <span><i>1</i><b>按住</b></span><span>張嘴吃蟲</span>
+        </li>
+        <li>
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 21V8"/><path d="m7 12 5-5 5 5"/><path d="M5 3h14"/></svg>
+          <span><i>2</i><b>放開</b></span><span>閉嘴往上飛</span>
+        </li>
+      </ol>
+      <p class="tips">嘴巴張開風阻大，會往下掉、飛得慢。<br>小心不要撞到地面和路燈。</p>
+      <button type="button" id="btnStart" class="cta">出發覓食！<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></button>
     </div>
   </div>
 
@@ -227,11 +337,31 @@ footer b { color: var(--ink); font-weight: 500; }
       <h2 id="overTitle">天亮了</h2>
       <p class="big">這一晚吃了<b id="overScore">0</b>隻蟲</p>
       <p class="note" id="overNote"></p>
-      <button type="button" id="btnAgain">再飛一晚</button>
+      <form class="submit" id="submitForm" hidden>
+        <label for="nameInput" id="submitLabel">進入前 10 名了！留下名字登上排行榜</label>
+        <div class="submit-row" id="submitRow">
+          <input id="nameInput" name="name" maxlength="10" autocomplete="nickname" enterkeyhint="send" placeholder="輸入暱稱">
+          <button type="submit" id="btnSubmit">送出</button>
+        </div>
+        <p class="hint" id="submitMsg" hidden></p>
+      </form>
+      <div class="actions">
+        <button type="button" id="btnAgain">再飛一晚</button>
+        <button type="button" class="link" id="btnBoardOver">查看排行榜</button>
+      </div>
       <div class="fact">
-        <span class="fact-label">你知道嗎？</span>
+        <span class="fact-label"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffd27a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2V17h6v-.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2z"/></svg>你知道嗎？</span>
         <p id="factText"></p>
       </div>
+    </div>
+  </div>
+
+  <div class="panel" id="panelBoard" hidden>
+    <div class="card">
+      <h2>排行榜</h2>
+      <p class="note" id="boardStatus">讀取中…</p>
+      <ol class="board-list" id="boardList"></ol>
+      <button type="button" class="ghost" id="btnBoardBack">返回</button>
     </div>
   </div>
 </div>
@@ -372,20 +502,143 @@ footer b { color: var(--ink); font-weight: 500; }
     $('overNote').textContent = note;
     $('factText').textContent = nextFact();
     panelOver.hidden = false;
+    offerSubmit(score);
+  }
+
+  // ---------- leaderboard ----------
+  // Local copies talk to `wrangler dev`; the published page talks to the Cloudflare Worker.
+  const LOCAL_HOSTS = ['localhost', '127.0.0.1'];
+  const LEADERBOARD_API = LOCAL_HOSTS.includes(location.hostname)
+    ? 'http://localhost:8787/scores'
+    : 'https://nightjar-leaderboard.star82620.workers.dev/scores';
+  const TOP_N = 10;
+  const SUBMIT_ERRORS = {
+    name_invalid: '名字要 1 到 10 個字。',
+    name_blocked: '這個名字不能用，換一個吧。',
+    too_fast: '送出太快了，等幾秒再試一次。',
+    score_invalid: '這個分數沒辦法登記。'
+  };
+  const panelBoard = $('panelBoard'), boardList = $('boardList'), boardStatus = $('boardStatus');
+  const submitForm = $('submitForm'), submitLabel = $('submitLabel'), submitRow = $('submitRow');
+  const nameInput = $('nameInput'), btnSubmit = $('btnSubmit'), submitMsg = $('submitMsg');
+  const setMsg = text => { submitMsg.textContent = text; submitMsg.hidden = !text; };
+  let topCache = null, myScore = null, pendingScore = 0, gameNo = 0, boardReturn = panelStart;
+
+  async function fetchTop() {
+    const res = await fetch(LEADERBOARD_API);
+    if (!res.ok) throw new Error(`leaderboard ${res.status}`);
+    topCache = (await res.json()).top;
+    return topCache;
+  }
+
+  const qualifies = (s, top) => s > 0 && (top.length < TOP_N || s > top[top.length - 1].score);
+
+  function offerSubmit(finalScore) {
+    const thisGame = ++gameNo;
+    submitForm.hidden = true;
+    pendingScore = finalScore;
+    fetchTop().then(top => {
+      if (thisGame !== gameNo || state !== 'over' || !qualifies(finalScore, top)) return;
+      submitLabel.textContent = '進入前 10 名了！留下名字登上排行榜';
+      submitRow.hidden = false;
+      nameInput.disabled = false;
+      btnSubmit.disabled = false;
+      setMsg('');
+      try { nameInput.value = localStorage.getItem('nightjar-name') || ''; } catch (e) {}
+      submitForm.hidden = false;
+    }).catch(() => {});
+  }
+
+  submitForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    const name = nameInput.value.trim();
+    if (!name) { setMsg('先輸入暱稱再送出。'); return; }
+    const thisGame = gameNo;
+    btnSubmit.disabled = true;
+    nameInput.disabled = true;
+    setMsg('送出中…');
+    try {
+      const res = await fetch(LEADERBOARD_API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, score: pendingScore })
+      });
+      const data = await res.json().catch(() => ({}));
+      if (thisGame !== gameNo) return;
+      if (!res.ok) {
+        setMsg(SUBMIT_ERRORS[data.error] || '送出失敗，請稍後再試。');
+        btnSubmit.disabled = false;
+        nameInput.disabled = false;
+        return;
+      }
+      try { localStorage.setItem('nightjar-name', name); } catch (e) {}
+      topCache = data.top;
+      myScore = pendingScore;
+      submitLabel.textContent = `登上排行榜第 ${data.rank} 名！`;
+      submitRow.hidden = true;
+      setMsg('');
+    } catch (err) {
+      if (thisGame !== gameNo) return;
+      setMsg('連不上排行榜，請稍後再試。');
+      btnSubmit.disabled = false;
+      nameInput.disabled = false;
+    }
+  });
+
+  function renderBoard(top) {
+    const mine = myScore === null ? -1 : top.map(r => r.score).lastIndexOf(myScore);
+    boardList.replaceChildren(...top.map((row, i) => {
+      const li = document.createElement('li');
+      if (i === mine) li.className = 'me';
+      const rank = document.createElement('span');
+      rank.className = 'rank';
+      rank.textContent = i + 1;
+      const who = document.createElement('span');
+      who.className = 'who';
+      who.textContent = row.name;
+      const pts = document.createElement('span');
+      pts.className = 'pts';
+      pts.textContent = `${row.score} 隻`;
+      li.append(rank, who, pts);
+      return li;
+    }));
+    boardStatus.hidden = top.length > 0;
+    boardStatus.textContent = '還沒有人上榜，第一名等你來拿！';
+  }
+
+  async function openBoard(from) {
+    boardReturn = from;
+    from.hidden = true;
+    panelBoard.hidden = false;
+    if (topCache) renderBoard(topCache);
+    else { boardList.replaceChildren(); boardStatus.hidden = false; boardStatus.textContent = '讀取中…'; }
+    try {
+      renderBoard(await fetchTop());
+    } catch (err) {
+      boardStatus.hidden = false;
+      boardStatus.textContent = '排行榜暫時連不上，請稍後再試。';
+    }
+  }
+
+  function closeBoard() {
+    panelBoard.hidden = true;
+    boardReturn.hidden = false;
   }
 
   // ---------- input ----------
   function press() {
+    if (!panelBoard.hidden) return;
     if (state === 'ready') { start(); needRelease = true; holding = true; return; }
-    if (state === 'over') {
-      if (performance.now() - overAt < 700) return;
-      start(); needRelease = true; holding = true; return;
-    }
+    // the game-over card only responds to its own buttons
+    if (state === 'over') return;
     holding = true;
   }
   function release() { holding = false; needRelease = false; }
 
+  const typing = e => e.target instanceof Element && e.target.closest('input, textarea');
   window.addEventListener('keydown', e => {
+    if (typing(e)) return;
+    if (e.code === 'Escape' && !panelBoard.hidden) { closeBoard(); return; }
     if (e.code === 'Space' || e.code === 'ArrowDown') {
       e.preventDefault();
       if (e.repeat) return;
@@ -393,10 +646,12 @@ footer b { color: var(--ink); font-weight: 500; }
     }
   });
   window.addEventListener('keyup', e => {
+    if (typing(e)) return;
     if (e.code === 'Space' || e.code === 'ArrowDown') { e.preventDefault(); release(); }
   });
   stage.addEventListener('pointerdown', e => {
-    if (e.target.closest('.card')) return;
+    // while a card is showing, only its buttons do anything
+    if (state !== 'play') return;
     e.preventDefault();
     press();
   });
@@ -406,6 +661,8 @@ footer b { color: var(--ink); font-weight: 500; }
   stage.addEventListener('contextmenu', e => e.preventDefault());
   $('btnStart').addEventListener('click', e => { e.currentTarget.blur(); start(); });
   $('btnAgain').addEventListener('click', e => { e.currentTarget.blur(); start(); });
+  $('btnBoardOver').addEventListener('click', e => { e.currentTarget.blur(); openBoard(panelOver); });
+  $('btnBoardBack').addEventListener('click', e => { e.currentTarget.blur(); closeBoard(); });
 
   // ---------- update ----------
   function update(dt) {
@@ -558,7 +815,7 @@ footer b { color: var(--ink); font-weight: 500; }
     for (const pp of pops) {
       ctx.globalAlpha = clamp(pp.life, 0, 1);
       ctx.fillStyle = `rgb(${C.lamp})`;
-      ctx.font = `700 ${pp.big ? 17 : 14}px "LXGW WenKai TC", "Kaiti TC", serif`;
+      ctx.font = `400 ${pp.big ? 17 : 14}px "LXGW Marker Gothic", "Noto Sans TC", sans-serif`;
       ctx.fillText(pp.text, pp.x, pp.y);
     }
     ctx.globalAlpha = 1;
