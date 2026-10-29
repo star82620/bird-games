@@ -4,6 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>夜鷹開飯啦！</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="description" content="台灣夜鷹在夜空中張大嘴吃飛蟲。按住張嘴，放開往上飛，在天亮前填飽肚子。">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:title" content="夜鷹開飯啦！">
+<meta property="og:description" content="台灣夜鷹在夜空中張大嘴吃飛蟲。按住張嘴，放開往上飛，在天亮前填飽肚子。">
+<meta property="og:url" content="https://bird-games.star82620.workers.dev/nightjar/">
+<meta property="og:image" content="https://bird-games.star82620.workers.dev/nightjar/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -143,6 +156,8 @@ h1 small {
   border-radius: 12px;
   padding: 14px;
 }
+#panelOver .submit.offline { background: none; border-color: var(--line); }
+#panelOver .submit.offline label { color: var(--muted); font-weight: 400; }
 #panelOver .actions { margin-top: 8px; gap: 18px; }
 #btnAgain { padding: 12px 28px; min-height: 48px; }
 #btnSubmit { color: var(--lamp); background: transparent; border: 1px solid var(--lamp); padding: 0 18px; min-height: 44px; }
@@ -539,6 +554,7 @@ footer b { color: var(--ink); font-weight: 500; }
     pendingScore = finalScore;
     fetchTop().then(top => {
       if (thisGame !== gameNo || state !== 'over' || !qualifies(finalScore, top)) return;
+      submitForm.classList.remove('offline');
       submitLabel.textContent = '進入前 10 名了！留下名字登上排行榜';
       submitRow.hidden = false;
       nameInput.disabled = false;
@@ -546,7 +562,15 @@ footer b { color: var(--ink); font-weight: 500; }
       setMsg('');
       try { nameInput.value = localStorage.getItem('nightjar-name') || ''; } catch (e) {}
       submitForm.hidden = false;
-    }).catch(() => {});
+    }).catch(() => {
+      // Say so instead of silently skipping the name field.
+      if (thisGame !== gameNo || state !== 'over' || finalScore <= 0) return;
+      submitForm.classList.add('offline');
+      submitLabel.textContent = '排行榜暫時連不上';
+      submitRow.hidden = true;
+      setMsg('');
+      submitForm.hidden = false;
+    });
   }
 
   submitForm.addEventListener('submit', async e => {
